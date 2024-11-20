@@ -4,8 +4,10 @@
     "slug": "LaZona",
     "version": "1.0.0",
     "orientation": "portrait",
+    "entryPoint": "./App.js",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",

@@ -1,18 +1,27 @@
-// src/screens/ProfileScreen.js
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { auth } from '../firebaseConfig';
 
 const ProfileScreen = ({ navigation }) => {
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        navigation.replace('Login'); // Redirige a la pantalla de login después del cierre de sesión
+      })
+      .catch((error) => {
+        console.error('Error al cerrar sesión:', error);
+      });
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Perfil del Usuario</Text>
-      <View style={styles.profileInfo}>
-        <Text>Nombre: Juan Pérez</Text>
-        <Text>Email: juan.perez@example.com</Text>
-        <Text>Teléfono: +54 9 123 456 789</Text>
-      </View>
-      <Button title="Cerrar sesión" onPress={() => navigation.goBack()} />
-      <Button title="Volver a Inicio" onPress={() => navigation.goBack()} />
+      <Text style={styles.title}>Perfil de Usuario</Text>
+      <Text style={styles.email}>{auth.currentUser?.email}</Text>
+      <Button
+        title="Cerrar Sesión"
+        onPress={handleLogout}
+        color="#FF0000"
+      />
     </View>
   );
 };
@@ -20,19 +29,19 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  profileInfo: {
-    padding: 10,
+  email: {
+    fontSize: 18,
+    color: '#555',
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
   },
 });
 
